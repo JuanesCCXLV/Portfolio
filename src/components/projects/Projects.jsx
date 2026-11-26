@@ -21,6 +21,24 @@ const LANG_COLORS = {
   Shell: "#89e051",
 };
 
+/*
+ * Repos ocultos: los que en GitHub (About → Description) tienen solo
+ * "Exposición", "Demostración" o "Exposición y demostración".
+ * No importan mayúsculas, tildes ni un punto final.
+ */
+const HIDDEN_DESCRIPTION =
+  /^(exposicion|demostracion)(\s*(y|\/|,|-)\s*(exposicion|demostracion))?\.?$/;
+
+const normalize = (text = "") =>
+  text
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .trim();
+
+const isShowcase = (repo) =>
+  !repo.fork && !HIDDEN_DESCRIPTION.test(normalize(repo.description || ""));
+
 const formatName = (name) => name.replace(/[-_]+/g, " ").trim();
 
 const formatDate = (iso) =>
@@ -42,7 +60,7 @@ const Projects = () => {
       .then((data) => {
         if (Array.isArray(data)) {
           const sorted = data
-            .filter((repo) => !repo.fork)
+            .filter(isShowcase)
             .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
           setRepos(sorted);
         } else {
