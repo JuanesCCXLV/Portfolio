@@ -60,7 +60,7 @@ const Projects = () => {
       .then((data) => {
         if (Array.isArray(data)) {
           const sorted = data
-            .filter(isShowcase)
+            .filter(i
             .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
           setRepos(sorted);
         } else {
