@@ -1,35 +1,85 @@
-.about-section {
-    padding: 4rem 2rem;
-    background-color: #f8f9fa;
-  }
-  
-  .about-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .about-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .about-text {
-    flex: 1;
-  }
-  
-  .about-text p {
-    margin-bottom: 1rem;
-    line-height: 1.6;
-    color: #333;
-  }
-  
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
 
-  @media (min-width: 768px) {
-    .about-content {
-      flex-direction: row;
-      align-items: center;
-    }
-    
+.about__text p {
+  color: var(--text-soft);
+  font-size: 1.08rem;
+}
+
+.about__text p + p {
+  margin-top: 20px;
+}
+
+.about__text strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.about__text em {
+  font-style: normal;
+  color: var(--accent-2);
+}
+
+.about__code {
+  overflow: hidden;
+}
+
+.about__code-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.about__code-bar span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.about__code-bar span:nth-child(1) { background: #f87171; }
+.about__code-bar span:nth-child(2) { background: #fbbf24; }
+.about__code-bar span:nth-child(3) { background: #4ade80; }
+
+.about__code-bar code {
+  margin-left: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.about__code pre {
+  margin: 0;
+  padding: 22px 24px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.85;
+}
+
+.tok-punc { color: var(--muted); }
+.tok-key { color: var(--accent-2); }
+.tok-str { color: #fbbf24; }
+.tok-bool { color: var(--accent); }
+
+@media (max-width: 900px) {
+  .about__grid {
+    grid-template-columns: minmax(0, 1fr);
   }
+}
+
+@media (max-width: 480px) {
+  .about__code pre {
+    font-size: 0.78rem;
+    padding: 18px;
+  }
+}
