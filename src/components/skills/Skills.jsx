@@ -1,52 +1,76 @@
+import Reveal from "../Reveal";
 import "./Skills.css";
 
-const Skills = () => {
-    const skills = [
-        { name: 'React JavaScript', level: 'Medio' },
-        { name: 'Python', level: 'Alto' },
-        { name: 'Kotlin + Android Studio', level: 'Bajo' },
-        { name: 'Java + JavaSwing en ApacheNetBeans', level: 'Medio' },
-        { name: 'C++', level: 'Medio' },
-        { name: 'Bases de datos SQL', level: 'Medio' },
-        { name: 'Bases de datos noSQL', level: 'Bajo' },
-        { name: 'Metodologías Agiles (Scrum)', level: 'Alto' },
-        { name: 'Fundamentos en redes y ciberseguridad', level: 'Medio' },
-        { name: 'Diseño de contenido para interfaces de usuario', level: 'Bajo' }
-    ];
+const LEVELS = { Bajo: 1, Medio: 2, Alto: 3 };
 
-    const getLevelPercentage = (level) => {
-        switch (level) {
-            case 'Alto':
-                return '100%';
-            case 'Medio':
-                return '60%';
-            case 'Bajo':
-                return '30%';
-            default:
-                return '0%';
-        }
-    }; 
+const GROUPS = [
+  {
+    title: "Lenguajes y frameworks",
+    items: [
+      { name: "Python", level: "Alto" },
+      { name: "React / JavaScript", level: "Medio" },
+      { name: "Java + Swing (NetBeans)", level: "Medio" },
+      { name: "C++", level: "Medio" },
+      { name: "Kotlin + Android Studio", level: "Bajo" },
+    ],
+  },
+  {
+    title: "Datos e infraestructura",
+    items: [
+      { name: "Bases de datos SQL", level: "Medio" },
+      { name: "Bases de datos NoSQL", level: "Bajo" },
+      { name: "Fundamentos de redes y ciberseguridad", level: "Medio" },
+    ],
+  },
+  {
+    title: "Metodologías y diseño",
+    items: [
+      { name: "Metodologías ágiles (Scrum)", level: "Alto" },
+      { name: "Diseño de contenido para interfaces", level: "Bajo" },
+    ],
+  },
+];
 
-    return (
-        <section className="skills-section">
-            <h2>Mis Habilidades</h2>
-            <div className="skills-container">
-                {skills.map((skill, index) => (
-                    <div className="skill-item" key={index}>
-                        <div className="skill-info">
-                            <span>{skill.name}</span>
-                            <span>{skill.level}</span>
-                        </div>
-                        <div className="skill-bar">
-                            <div className="skill-progress"
-                                style={{ width: getLevelPercentage(skill.level) }}
-                            ></div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </section>
-    ); 
-}
+const Skills = () => (
+  <section id="habilidades" className="section skills">
+    <div className="container">
+      <Reveal className="section-head">
+        <span className="section-label">// 03. habilidades</span>
+        <h2 className="section-title">Con qué trabajo</h2>
+        <p className="section-sub">
+          Tecnologías y prácticas que he usado en proyectos académicos y personales.
+        </p>
+      </Reveal>
 
-export default Skills; 
+      <div className="skills__grid">
+        {GROUPS.map((group, g) => (
+          <Reveal key={group.title} className="skills__group card" delay={g * 100}>
+            <h3 className="skills__group-title">{group.title}</h3>
+            <ul className="skills__list">
+              {group.items.map((skill) => (
+                <li key={skill.name} className="skills__item">
+                  <span className="skills__name">{skill.name}</span>
+                  <span
+                    className="skills__meter"
+                    role="img"
+                    aria-label={`Nivel ${skill.level.toLowerCase()}`}
+                  >
+                    {[1, 2, 3].map((n) => (
+                      <span
+                        key={n}
+                        className={`skills__seg ${n <= LEVELS[skill.level] ? "is-on" : ""}`}
+                      />
+                    ))}
+                    <span className="skills__level">{skill.level}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+export default Skills;

@@ -1,42 +1,69 @@
-import './Footer.css';
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { Link, useLocation } from "react-router-dom";
+import { FiGithub, FiLinkedin, FiMail, FiArrowUp } from "react-icons/fi";
+import { SECTIONS } from "../navbar/Navbar";
+import "./Footer.css";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
+  const { pathname } = useLocation();
+  const prefix = pathname === "/" ? "" : "/";
 
   return (
     <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-links">
-          <a href="#about">Sobre mí</a>
-          <a href="#projects">Proyectos</a>
-          <a href="#skills">Habilidades</a>
-          <a href="#contact">Contacto</a>
+      <div className="container footer__inner">
+        <div className="footer__brand">
+          <a href={pathname === "/" ? "#inicio" : "/"} className="footer__logo">
+            <span>&lt;</span>juane<span> /&gt;</span>
+          </a>
+          <p>Desarrollo de software · Universidad del Valle</p>
         </div>
-        
-        <div className="social-links">
-          <a href="https://github.com/JuanEPN" target="_blank" rel="noopener noreferrer">
-            <FaGithub className="social-icon" />
+
+        <nav className="footer__links" aria-label="Secciones">
+          {SECTIONS.map(({ id, label }) => (
+            <a key={id} href={`${prefix}#${id}`}>
+              {label}
+            </a>
+          ))}
+          <Link to="/forum">Foro</Link>
+        </nav>
+
+        <div className="footer__social">
+          <a
+            href="https://github.com/JuanesCCXLV"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
+            <FiGithub />
           </a>
-          <a href="hhttps://www.linkedin.com/in/juan-esteban-pereira-neira-4a64b6283/" target="_blank" rel="noopener noreferrer">
-            <FaLinkedin className="social-icon" />
+          <a
+            href="https://www.linkedin.com/in/juan-esteban-pereira-neira-4a64b6283/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            <FiLinkedin />
           </a>
-          <a href="juan.pereira.neira@correounivalle.edu.co " target="_blank" rel="noopener noreferrer">
-            <FaEnvelope className="social-icon" />
-          </a>
-          <a href="juanestebanpereiraneira@gmail.com">
-            <FaEnvelope className="social-icon" />
-          </a>
-          <a href="juan.pereira.neira@outlook.com">
-            <FaEnvelope className="social-icon" />
+          <a href="mailto:juanestebanpereiraneira@gmail.com" aria-label="Correo">
+            <FiMail />
           </a>
         </div>
-        <div className="footer-copyright">
-          <p>&copy; {currentYear} Juan Esteban Pereira Neira. Todos los derechos reservados.</p>
-        </div>
+      </div>
+
+      <div className="container footer__bottom">
+        <p>
+          © {year} Juan Esteban Pereira Neira. Hecho con React + Vite.
+        </p>
+        <button
+          className="footer__top"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          aria-label="Volver arriba"
+        >
+          <FiArrowUp />
+        </button>
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
